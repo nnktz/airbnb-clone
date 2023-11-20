@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 
 import { NavBar } from '@/components/layout/nav-bar';
+import { ModalProvider } from '@/components/providers/modal-provider';
+import { ToasterProvider } from '@/components/providers/toaster-provider';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -25,6 +27,8 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={font.className}>
+        <ToasterProvider />
+        <ModalProvider />
         <NavBar />
         {children}
       </body>
