@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 import { useRegisterModal } from '@/hooks/use-register-modal';
 
@@ -12,6 +13,7 @@ import { BodyContent } from './body-content';
 import { FooterContent } from './footer-content';
 
 export const RegisterModal = () => {
+  const router = useRouter();
   const isOpen = useRegisterModal((state) => state.isOpen);
   const onClose = useRegisterModal((state) => state.onClose);
 
@@ -34,7 +36,9 @@ export const RegisterModal = () => {
       setIsLoading(true);
 
       await axios.post('api/register', data).then((response) => {
+        toast.success('Register success.');
         onClose();
+        router.refresh();
       });
     } catch (error: any) {
       toast.error('Something went wrong.');

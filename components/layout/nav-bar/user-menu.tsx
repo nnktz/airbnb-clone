@@ -47,7 +47,10 @@ export const UserMenu = () => {
                 label='Login'
               />
               <MenuItem
-                onClick={() => registerModal.onOpen()}
+                onClick={() => {
+                  registerModal.onOpen();
+                  setIsOpen(false);
+                }}
                 label='Sign up'
               />
             </>
