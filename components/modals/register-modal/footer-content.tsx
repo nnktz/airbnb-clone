@@ -3,6 +3,7 @@
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { signIn } from 'next-auth/react';
+import { useCallback } from 'react';
 
 import { useRegisterModal } from '@/hooks/use-register-modal';
 import { useLoginModal } from '@/hooks/use-login-modal';
@@ -12,6 +13,11 @@ import { Button } from '@/components/ui/button';
 export const FooterContent = () => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal]);
 
   return (
     <div className='flex flex-col gap-4 mt-3'>
@@ -37,10 +43,7 @@ export const FooterContent = () => {
 
           <div
             role='button'
-            onClick={() => {
-              registerModal.onClose();
-              loginModal.onOpen();
-            }}
+            onClick={toggle}
             className='text-neutral-800 hover:underline'>
             Login
           </div>
