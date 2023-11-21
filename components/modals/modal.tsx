@@ -92,31 +92,29 @@ export const Modal = ({
                 <div className='text-lg font-semibold'>{title}</div>
               </div>
 
-              <form action={handleSubmit}>
-                {/* Body */}
-                <div className='relative p-6 flex-auto'>{body}</div>
+              {/* Body */}
+              <div className='relative p-6 flex-auto'>{body}</div>
 
-                {/* Footer */}
-                <div className='flex flex-col gap-2 p-6'>
-                  <div className='flex flex-row items-center gap-4 w-full'>
-                    {secondaryActionLabel && (
-                      <Button
-                        disabled={disabled}
-                        label={secondaryActionLabel}
-                        onClick={handleSecondaryAction}
-                      />
-                    )}
-
+              {/* Footer */}
+              <div className='flex flex-col gap-2 p-6'>
+                <div className='flex flex-row items-center gap-4 w-full'>
+                  {secondaryActionLabel && (
                     <Button
                       disabled={disabled}
-                      label={actionLabel}
-                      type='submit'
+                      label={secondaryActionLabel}
+                      onClick={handleSecondaryAction}
                     />
-                  </div>
+                  )}
 
-                  {footer}
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={disabled}
+                    label={actionLabel}
+                  />
                 </div>
-              </form>
+
+                {footer}
+              </div>
             </div>
           </div>
         </div>
