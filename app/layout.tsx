@@ -2,6 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 
+import getCurrentUser from '@/actions/get-current-user';
+
 import { NavBar } from '@/components/layout/nav-bar';
 import { ModalProvider } from '@/components/providers/modal-provider';
 import { ToasterProvider } from '@/components/providers/toaster-provider';
@@ -19,17 +21,19 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang='en'>
       <body className={font.className}>
         <ToasterProvider />
         <ModalProvider />
-        <NavBar />
+        <NavBar currentUser={currentUser} />
         {children}
       </body>
     </html>

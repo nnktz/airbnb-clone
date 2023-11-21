@@ -32,16 +32,16 @@ export const FooterContent = () => {
 
       <div className='text-neutral-500 text-center mt-4 font-light'>
         <div className='flex flex-row items-center justify-center gap-2'>
-          <span>Already have an account?</span>
+          <span>You don&rsquo;t have an account?</span>
 
           <div
             role='button'
             onClick={() => {
-              registerModal.onClose();
-              loginModal.onOpen();
+              loginModal.onClose();
+              registerModal.onOpen();
             }}
             className='text-neutral-800 hover:underline'>
-            Login
+            Sign up
           </div>
         </div>
       </div>

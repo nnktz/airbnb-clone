@@ -6,7 +6,8 @@ import { cn } from '@/lib/utils';
 
 interface ButtonProps {
   label: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   outline?: boolean;
   small?: boolean;
@@ -16,6 +17,7 @@ interface ButtonProps {
 export const Button = ({
   label,
   onClick,
+  type,
   disabled,
   outline,
   small,
@@ -24,6 +26,7 @@ export const Button = ({
   return (
     <button
       onClick={onClick}
+      type={type}
       disabled={disabled}
       className={cn(
         'relative disabled:opacity-60 disabled:cursor-not-allowed rounded-lg hover:opacity-75 transition w-full',

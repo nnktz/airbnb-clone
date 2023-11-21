@@ -1,21 +1,21 @@
 'use client';
 
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
-import { useRegisterModal } from '@/hooks/use-register-modal';
+import { useLoginModal } from '@/hooks/use-login-modal';
 
 import { Modal } from '../modal';
 import { BodyContent } from './body-content';
 import { FooterContent } from './footer-content';
 
-export const RegisterModal = () => {
+export const LoginModal = () => {
   const router = useRouter();
-  const isOpen = useRegisterModal((state) => state.isOpen);
-  const onClose = useRegisterModal((state) => state.onClose);
+  const isOpen = useLoginModal((state) => state.isOpen);
+  const onClose = useLoginModal((state) => state.onClose);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,34 +26,38 @@ export const RegisterModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
       email: '',
       password: '',
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
-    try {
-      setIsLoading(true);
+  const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
+    setIsLoading(true);
 
-      await axios.post('api/register', data).then((response) => {
-        toast.success('Register success.');
+    signIn('credentials', {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+
+      if (callback?.ok) {
+        toast.success('Logged in.');
         reset();
         onClose();
         router.refresh();
-      });
-    } catch (error: any) {
-      toast.error('Something went wrong.');
-    } finally {
-      setIsLoading(false);
-    }
+      }
+
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
   };
 
   return (
     <Modal
       disabled={isLoading}
       isOpen={isOpen}
-      title='Register'
+      title='Login'
       actionLabel='Continue'
       body={
         <BodyContent
