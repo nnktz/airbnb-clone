@@ -6,7 +6,8 @@ import { FieldValues, useForm } from 'react-hook-form'
 import { useRentModal } from '@/hooks/use-rent-modal'
 
 import { Modal } from '../modal'
-import { BodyContent } from './body-content'
+import { CategoryContent } from './category-content'
+import { LocationContent } from './location-content'
 
 enum STEPS {
   CATEGORY = 0,
@@ -42,6 +43,7 @@ export const RentModal = () => {
   })
 
   const category = watch('category')
+  const location = watch('location')
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -75,21 +77,32 @@ export const RentModal = () => {
     return 'Back'
   }, [step])
 
+  let bodyContent = (
+    <CategoryContent
+      category={category}
+      setCustomValue={(category) => setCustomValue('category', category)}
+    />
+  )
+
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <LocationContent
+        location={location}
+        setCustomValue={(value) => setCustomValue('location', value)}
+      />
+    )
+  }
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={() => {}}
-      actionLabel="Submit"
+      onSubmit={onNext}
+      actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       title="Airbnb your home"
-      body={
-        <BodyContent
-          category={category}
-          setCustomValue={(category) => setCustomValue('category', category)}
-        />
-      }
+      body={bodyContent}
     />
   )
 }

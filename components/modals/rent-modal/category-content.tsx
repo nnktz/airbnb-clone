@@ -4,12 +4,15 @@ import { CategoryInput } from '@/components/category-input'
 import { Heading } from '@/components/heading'
 import { categories } from '@/components/layout/nav-bar/categories'
 
-interface BodyContentProps {
+interface CategoryContentProps {
   setCustomValue: (value: string) => void
   category: any
 }
 
-export const BodyContent = ({ setCustomValue, category }: BodyContentProps) => {
+export const CategoryContent = ({
+  setCustomValue,
+  category,
+}: CategoryContentProps) => {
   return (
     <div className="flex flex-col gap-8">
       <Heading
