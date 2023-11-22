@@ -9,6 +9,7 @@ import { Modal } from '../modal'
 import { CategoryContent } from './category-content'
 import { LocationContent } from './location-content'
 import { InfoContent } from './info-content'
+import { ImagesContent } from './images-content'
 
 enum STEPS {
   CATEGORY = 0,
@@ -48,6 +49,7 @@ export const RentModal = () => {
   const guestCount = watch('guestCount')
   const roomCount = watch('roomCount')
   const bathroomCount = watch('bathroomCount')
+  const imageSrc = watch('imageSrc')
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -108,6 +110,15 @@ export const RentModal = () => {
         setCustomValueBathroom={(value) =>
           setCustomValue('bathroomCount', value)
         }
+      />
+    )
+  }
+
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <ImagesContent
+        imageSrc={imageSrc}
+        setCustomValue={(value) => setCustomValue('imageSrc', value)}
       />
     )
   }
