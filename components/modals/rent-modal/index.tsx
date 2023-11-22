@@ -8,6 +8,7 @@ import { useRentModal } from '@/hooks/use-rent-modal'
 import { Modal } from '../modal'
 import { CategoryContent } from './category-content'
 import { LocationContent } from './location-content'
+import { InfoContent } from './info-content'
 
 enum STEPS {
   CATEGORY = 0,
@@ -44,6 +45,9 @@ export const RentModal = () => {
 
   const category = watch('category')
   const location = watch('location')
+  const guestCount = watch('guestCount')
+  const roomCount = watch('roomCount')
+  const bathroomCount = watch('bathroomCount')
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -89,6 +93,21 @@ export const RentModal = () => {
       <LocationContent
         location={location}
         setCustomValue={(value) => setCustomValue('location', value)}
+      />
+    )
+  }
+
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <InfoContent
+        guestCount={guestCount}
+        roomCount={roomCount}
+        bathroomCount={bathroomCount}
+        setCustomValueGuest={(value) => setCustomValue('guestCount', value)}
+        setCustomValueRoom={(value) => setCustomValue('roomCount', value)}
+        setCustomValueBathroom={(value) =>
+          setCustomValue('bathroomCount', value)
+        }
       />
     )
   }

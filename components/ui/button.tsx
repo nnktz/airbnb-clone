@@ -29,7 +29,7 @@ export const Button = ({
       type={type}
       disabled={disabled}
       className={cn(
-        'relative w-full rounded-lg transition hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-60',
+        'relative w-full select-none rounded-lg transition hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-60',
         outline
           ? 'border-black bg-white text-black'
           : 'border-rose-500 bg-rose-500 text-white',
