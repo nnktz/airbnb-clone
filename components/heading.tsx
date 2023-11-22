@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 interface HeadingProps {
   title: string
   subtitle?: string
-  center?: string
+  center?: boolean
 }
 
 export const Heading = ({ title, subtitle, center }: HeadingProps) => {
