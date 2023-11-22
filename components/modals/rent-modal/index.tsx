@@ -1,7 +1,10 @@
 'use client'
 
+import axios from 'axios'
+import toast from 'react-hot-toast'
 import { useMemo, useState } from 'react'
-import { FieldValues, useForm } from 'react-hook-form'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 import { useRentModal } from '@/hooks/use-rent-modal'
 
@@ -10,6 +13,8 @@ import { CategoryContent } from './category-content'
 import { LocationContent } from './location-content'
 import { InfoContent } from './info-content'
 import { ImagesContent } from './images-content'
+import { DescriptionContent } from './description-content'
+import { PriceContent } from './price-content'
 
 enum STEPS {
   CATEGORY = 0,
@@ -21,10 +26,12 @@ enum STEPS {
 }
 
 export const RentModal = () => {
+  const router = useRouter()
   const isOpen = useRentModal((state) => state.isOpen)
   const onClose = useRentModal((state) => state.onClose)
 
   const [step, setStep] = useState(STEPS.CATEGORY)
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     register,
@@ -41,6 +48,9 @@ export const RentModal = () => {
       roomCount: 1,
       bathroomCount: 1,
       imageSrc: '',
+      title: '',
+      description: '',
+      price: 1,
     },
   })
 
@@ -65,6 +75,28 @@ export const RentModal = () => {
 
   const onNext = () => {
     setStep((value) => value + 1)
+  }
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    try {
+      if (step !== STEPS.PRICE) {
+        return onNext()
+      }
+
+      setIsLoading(true)
+
+      await axios.post('/api/listings', data).then((response) => {
+        toast.success('Listing created.')
+        reset()
+        setStep(STEPS.CATEGORY)
+        onClose()
+        router.refresh()
+      })
+    } catch (error) {
+      toast.error('Something went wrong.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const actionLabel = useMemo(() => {
@@ -99,6 +131,22 @@ export const RentModal = () => {
     )
   }
 
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <DescriptionContent
+        isLoading={isLoading}
+        register={register}
+        errors={errors}
+      />
+    )
+  }
+
+  if (step === STEPS.PRICE) {
+    bodyContent = (
+      <PriceContent isLoading={isLoading} register={register} errors={errors} />
+    )
+  }
+
   if (step === STEPS.INFO) {
     bodyContent = (
       <InfoContent
@@ -127,7 +175,7 @@ export const RentModal = () => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
