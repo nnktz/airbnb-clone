@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>Hello Airbnb - Home page</div>;
+  return <div>Hello Airbnb - Home page</div>
 }

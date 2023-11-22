@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   GiBarn,
@@ -9,16 +9,16 @@ import {
   GiForestCamp,
   GiIsland,
   GiWindmill,
-} from 'react-icons/gi';
-import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
-import { MdOutlineVilla } from 'react-icons/md';
-import { FaSkiing } from 'react-icons/fa';
-import { BsSnow } from 'react-icons/bs';
-import { IoDiamond } from 'react-icons/io5';
-import { usePathname, useSearchParams } from 'next/navigation';
+} from 'react-icons/gi'
+import { TbBeach, TbMountain, TbPool } from 'react-icons/tb'
+import { MdOutlineVilla } from 'react-icons/md'
+import { FaSkiing } from 'react-icons/fa'
+import { BsSnow } from 'react-icons/bs'
+import { IoDiamond } from 'react-icons/io5'
+import { usePathname, useSearchParams } from 'next/navigation'
 
-import { Container } from '@/components/container';
-import { CategoryBox } from '@/components/category-box';
+import { Container } from '@/components/container'
+import { CategoryBox } from '@/components/category-box'
 
 export const categories = [
   {
@@ -96,22 +96,22 @@ export const categories = [
     icon: IoDiamond,
     description: 'This property is luxurious!',
   },
-];
+]
 
 export const Categories = () => {
-  const params = useSearchParams();
-  const pathname = usePathname();
-  const category = params?.get('category');
+  const params = useSearchParams()
+  const pathname = usePathname()
+  const category = params?.get('category')
 
-  const isMainPage = pathname === '/';
+  const isMainPage = pathname === '/'
 
   if (!isMainPage) {
-    return null;
+    return null
   }
 
   return (
     <Container>
-      <div className='pt-4 flex flex-row items-center justify-between overflow-x-auto'>
+      <div className="flex flex-row items-center justify-between overflow-x-auto pt-4">
         {categories.map((item) => (
           <CategoryBox
             key={item.label}
@@ -122,5 +122,5 @@ export const Categories = () => {
         ))}
       </div>
     </Container>
-  );
-};
+  )
+}

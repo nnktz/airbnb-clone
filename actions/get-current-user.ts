@@ -1,28 +1,28 @@
-import { getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth'
 
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import db from '@/lib/db';
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import db from '@/lib/db'
 
 export async function getSessions() {
-  return await getServerSession(authOptions);
+  return await getServerSession(authOptions)
 }
 
 export default async function getCurrentUser() {
   try {
-    const session = await getSessions();
+    const session = await getSessions()
 
     if (!session?.user?.email) {
-      return null;
+      return null
     }
 
     const currentUser = await db.user.findUnique({
       where: {
         email: session.user.email as string,
       },
-    });
+    })
 
     if (!currentUser) {
-      return null;
+      return null
     }
 
     return {
@@ -30,8 +30,8 @@ export default async function getCurrentUser() {
       createdAt: currentUser.createdAt.toISOString(),
       updatedAt: currentUser.updatedAt.toISOString(),
       emailVerified: currentUser.emailVerified?.toISOString() || null,
-    };
+    }
   } catch (error) {
-    return null;
+    return null
   }
 }

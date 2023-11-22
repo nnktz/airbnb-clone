@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import { useMemo, useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useMemo, useState } from 'react'
+import { FieldValues, useForm } from 'react-hook-form'
 
-import { useRentModal } from '@/hooks/use-rent-modal';
+import { useRentModal } from '@/hooks/use-rent-modal'
 
-import { Modal } from '../modal';
-import { BodyContent } from './body-content';
+import { Modal } from '../modal'
+import { BodyContent } from './body-content'
 
 enum STEPS {
   CATEGORY = 0,
@@ -18,10 +18,10 @@ enum STEPS {
 }
 
 export const RentModal = () => {
-  const isOpen = useRentModal((state) => state.isOpen);
-  const onClose = useRentModal((state) => state.onClose);
+  const isOpen = useRentModal((state) => state.isOpen)
+  const onClose = useRentModal((state) => state.onClose)
 
-  const [step, setStep] = useState(STEPS.CATEGORY);
+  const [step, setStep] = useState(STEPS.CATEGORY)
 
   const {
     register,
@@ -39,51 +39,51 @@ export const RentModal = () => {
       bathroomCount: 1,
       imageSrc: '',
     },
-  });
+  })
 
-  const category = watch('category');
+  const category = watch('category')
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
-    });
-  };
+    })
+  }
 
   const onBack = () => {
-    setStep((value) => value - 1);
-  };
+    setStep((value) => value - 1)
+  }
 
   const onNext = () => {
-    setStep((value) => value + 1);
-  };
+    setStep((value) => value + 1)
+  }
 
   const actionLabel = useMemo(() => {
     if (step === STEPS.PRICE) {
-      return 'Create';
+      return 'Create'
     }
 
-    return 'Next';
-  }, [step]);
+    return 'Next'
+  }, [step])
 
   const secondaryActionLabel = useMemo(() => {
     if (step === STEPS.CATEGORY) {
-      return undefined;
+      return undefined
     }
 
-    return 'Back';
-  }, [step]);
+    return 'Back'
+  }, [step])
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={() => {}}
-      actionLabel='Submit'
+      actionLabel="Submit"
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-      title='Airbnb your home'
+      title="Airbnb your home"
       body={
         <BodyContent
           category={category}
@@ -91,5 +91,5 @@ export const RentModal = () => {
         />
       }
     />
-  );
-};
+  )
+}

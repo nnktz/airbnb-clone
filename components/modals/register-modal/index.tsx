@@ -1,23 +1,23 @@
-'use client';
+'use client'
 
-import axios from 'axios';
-import toast from 'react-hot-toast';
-import { useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import { useState } from 'react'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
-import { useRegisterModal } from '@/hooks/use-register-modal';
+import { useRegisterModal } from '@/hooks/use-register-modal'
 
-import { Modal } from '../modal';
-import { BodyContent } from './body-content';
-import { FooterContent } from './footer-content';
+import { Modal } from '../modal'
+import { BodyContent } from './body-content'
+import { FooterContent } from './footer-content'
 
 export const RegisterModal = () => {
-  const router = useRouter();
-  const isOpen = useRegisterModal((state) => state.isOpen);
-  const onClose = useRegisterModal((state) => state.onClose);
+  const router = useRouter()
+  const isOpen = useRegisterModal((state) => state.isOpen)
+  const onClose = useRegisterModal((state) => state.onClose)
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     register,
@@ -30,31 +30,31 @@ export const RegisterModal = () => {
       email: '',
       password: '',
     },
-  });
+  })
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
 
       await axios.post('api/register', data).then((response) => {
-        toast.success('Register success.');
-        reset();
-        onClose();
-        router.refresh();
-      });
+        toast.success('Register success.')
+        reset()
+        onClose()
+        router.refresh()
+      })
     } catch (error: any) {
-      toast.error('Something went wrong.');
+      toast.error('Something went wrong.')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <Modal
       disabled={isLoading}
       isOpen={isOpen}
-      title='Register'
-      actionLabel='Continue'
+      title="Register"
+      actionLabel="Continue"
       body={
         <BodyContent
           isLoading={isLoading}
@@ -66,5 +66,5 @@ export const RegisterModal = () => {
       onClose={onClose}
       onSubmit={handleSubmit(onSubmit)}
     />
-  );
-};
+  )
+}

@@ -1,27 +1,25 @@
-'use client';
+'use client'
 
-import { CategoryInput } from '@/components/category-input';
-import { Heading } from '@/components/heading';
-import { categories } from '@/components/layout/nav-bar/categories';
+import { CategoryInput } from '@/components/category-input'
+import { Heading } from '@/components/heading'
+import { categories } from '@/components/layout/nav-bar/categories'
 
 interface BodyContentProps {
-  setCustomValue: (value: string) => void;
-  category: any;
+  setCustomValue: (value: string) => void
+  category: any
 }
 
 export const BodyContent = ({ setCustomValue, category }: BodyContentProps) => {
   return (
-    <div className='flex flex-col gap-8'>
+    <div className="flex flex-col gap-8">
       <Heading
-        title='Which of these best describe your place?'
-        subtitle='Pick a category'
+        title="Which of these best describe your place?"
+        subtitle="Pick a category"
       />
 
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto'>
+      <div className="grid max-h-[50vh] grid-cols-1 gap-3 overflow-y-auto md:grid-cols-2">
         {categories.map((item) => (
-          <div
-            key={item.label}
-            className='col-span-1'>
+          <div key={item.label} className="col-span-1">
             <CategoryInput
               onClick={setCustomValue}
               selected={item.label === category}
@@ -32,5 +30,5 @@ export const BodyContent = ({ setCustomValue, category }: BodyContentProps) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
