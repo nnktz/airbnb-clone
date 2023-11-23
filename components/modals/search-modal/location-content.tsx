@@ -3,17 +3,17 @@
 import dynamic from 'next/dynamic'
 import { useMemo } from 'react'
 
-import { Heading } from '@/components/heading'
 import { CountrySelect, CountrySelectValue } from '@/components/country-select'
+import { Heading } from '@/components/heading'
 
 interface LocationContentProps {
-  setCustomValue: (value: CountrySelectValue) => void
-  location: any
+  location: CountrySelectValue | undefined
+  onChange: (value: CountrySelectValue) => void
 }
 
 export const LocationContent = ({
-  setCustomValue,
   location,
+  onChange,
 }: LocationContentProps) => {
   const Map = useMemo(
     () =>
@@ -24,13 +24,15 @@ export const LocationContent = ({
   )
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4">
       <Heading
-        title="Where is your place located?"
-        subtitle="Help guests find you!"
+        title="Where do you wanna go?"
+        subtitle="Find the perfect location!"
       />
 
-      <CountrySelect value={location} onChange={setCustomValue} />
+      <CountrySelect value={location} onChange={onChange} />
+
+      <hr />
 
       <Map center={location?.latlng} />
     </div>

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { RegisterModal } from '../modals/register-modal'
 import { LoginModal } from '../modals/login-modal'
 import { RentModal } from '../modals/rent-modal'
+import { SearchModal } from '../modals/search-modal'
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -22,6 +23,7 @@ export const ModalProvider = () => {
       <RegisterModal />
       <LoginModal />
       <RentModal />
+      <SearchModal />
     </>
   )
 }

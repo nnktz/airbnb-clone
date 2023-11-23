@@ -19,13 +19,13 @@ export const CategoryBox = ({
   selected,
 }: CategoryBoxProps) => {
   const router = useRouter()
-  const params = useSearchParams()
+  const searchParams = useSearchParams()
 
   const handleClick = useCallback(() => {
     let currentQuery = {}
 
-    if (params) {
-      currentQuery = qs.parse(params.toString())
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString())
     }
 
     const updateQuery: any = {
@@ -33,7 +33,7 @@ export const CategoryBox = ({
       category: label,
     }
 
-    if (params?.get('category') === label) {
+    if (searchParams?.get('category') === label) {
       delete updateQuery?.category
     }
 
@@ -48,7 +48,7 @@ export const CategoryBox = ({
     )
 
     router.push(url)
-  }, [label, params, router])
+  }, [label, searchParams, router])
 
   return (
     <div
