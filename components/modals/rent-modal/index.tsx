@@ -181,6 +181,7 @@ export const RentModal = () => {
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       title="Airbnb your home"
       body={bodyContent}
+      disabled={isLoading}
     />
   )
 }
