@@ -96,7 +96,15 @@ export const UserMenu = ({ currentUser }: UserMenuProps) => {
                   label="My reservations"
                 />
 
-                <MenuItem onClick={() => {}} label="My properties" />
+                <MenuItem
+                  onClick={() => {
+                    router.push('/properties')
+                    setTimeout(() => {
+                      setIsOpen(false)
+                    }, 300)
+                  }}
+                  label="My properties"
+                />
 
                 <MenuItem
                   onClick={() => {
