@@ -75,7 +75,7 @@ export const ListingClient = ({
         .then((response) => {
           toast.success('Listing reserved.')
           setDateRange(initialDateRange)
-          //   TODO: redirect to /trips
+          router.push('/trips')
           router.refresh()
         })
     } catch (error) {

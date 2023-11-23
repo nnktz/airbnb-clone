@@ -1,12 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import { Reservation } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo } from 'react'
 import { format } from 'date-fns'
 
-import { SafeListing, SafeUser } from '@/types'
+import { SafeListing, SafeReservation, SafeUser } from '@/types'
 import useCountries from '@/hooks/use-contries'
 
 import { HeartButton } from './heart-button'
@@ -14,8 +13,8 @@ import { Button } from './ui/button'
 
 interface ListingCardProps {
   data: SafeListing
-  currentUser: SafeUser | null
-  reservation?: Reservation
+  currentUser?: SafeUser | null
+  reservation?: SafeReservation
   disabled?: boolean
   onAction?: (id: string) => void
   actionLabel?: string
@@ -51,7 +50,7 @@ export const ListingCard = ({
 
   const price = useMemo(() => {
     if (reservation) {
-      return reservation.totalPrice
+      return reservation.totalPrice.toLocaleString()
     }
 
     return data.price

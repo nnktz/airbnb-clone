@@ -2,11 +2,12 @@
 
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
 import { useRegisterModal } from '@/hooks/use-register-modal'
+import { useLoginModal } from '@/hooks/use-login-modal'
 
 import { Modal } from '../modal'
 import { BodyContent } from './body-content'
@@ -14,8 +15,8 @@ import { FooterContent } from './footer-content'
 
 export const RegisterModal = () => {
   const router = useRouter()
-  const isOpen = useRegisterModal((state) => state.isOpen)
-  const onClose = useRegisterModal((state) => state.onClose)
+  const registerModal = useRegisterModal()
+  const loginModal = useLoginModal()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -32,6 +33,12 @@ export const RegisterModal = () => {
     },
   })
 
+  const toggle = useCallback(() => {
+    registerModal.onClose()
+    router.refresh()
+    loginModal.onOpen()
+  }, [loginModal, registerModal, router])
+
   const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     try {
       setIsLoading(true)
@@ -39,8 +46,7 @@ export const RegisterModal = () => {
       await axios.post('api/register', data).then((response) => {
         toast.success('Register success.')
         reset()
-        onClose()
-        router.refresh()
+        toggle()
       })
     } catch (error: any) {
       toast.error('Something went wrong.')
@@ -52,7 +58,7 @@ export const RegisterModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={isOpen}
+      isOpen={registerModal.isOpen}
       title="Register"
       actionLabel="Continue"
       body={
@@ -63,7 +69,7 @@ export const RegisterModal = () => {
         />
       }
       footer={<FooterContent />}
-      onClose={onClose}
+      onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
     />
   )

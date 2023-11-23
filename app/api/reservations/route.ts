@@ -1,6 +1,8 @@
+import { NextResponse } from 'next/server'
+
 import getCurrentUser from '@/actions/get-current-user'
 import db from '@/lib/db'
-import { NextResponse } from 'next/server'
+
 export async function POST(req: Request) {
   try {
     const currentUser = await getCurrentUser()
