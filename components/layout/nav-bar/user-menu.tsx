@@ -76,7 +76,15 @@ export const UserMenu = ({ currentUser }: UserMenuProps) => {
                   label="My trips"
                 />
 
-                <MenuItem onClick={() => {}} label="My favorites" />
+                <MenuItem
+                  onClick={() => {
+                    router.push('/favorites')
+                    setTimeout(() => {
+                      setIsOpen(false)
+                    }, 300)
+                  }}
+                  label="My favorites"
+                />
 
                 <MenuItem
                   onClick={() => {
